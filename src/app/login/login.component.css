@@ -1,0 +1,13 @@
+*{
+  color: rgb(12, 99, 24);
+  width: 400px;
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  align-self: center;
+}
+
+strong{
+  font-style: italic;
+}
+

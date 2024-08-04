@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Ubuntu, "Helvetica", sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+mat-card {
+  width: 300px;
+}
