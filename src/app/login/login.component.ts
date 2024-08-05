@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular
 import { AuthService } from '../auth/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, ReactiveFormsModule, CommonModule],
+  imports: [MatButtonModule, NgOptimizedImage, MatInputModule, MatCardModule, MatFormFieldModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

@@ -1,13 +1,19 @@
 *{
-  color: rgb(12, 99, 24);
+  color: blue;
+}
+
+img{
   width: 400px;
-  text-align: center;
-  display: grid;
-  justify-content: center;
-  align-self: center;
+  height: 350px;
 }
 
 strong{
   font-style: italic;
 }
+
+
+button{
+  width: 100px;
+}
+
 

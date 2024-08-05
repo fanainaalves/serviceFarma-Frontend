@@ -6,13 +6,13 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AppHeaderModule } from './templates/app-header/app-header.module';
 import { AppFooterModule } from './templates/app-footer/app-footer.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppHeaderComponent } from './templates/app-header/app-header.component';
 import { AppFooterComponent } from './templates/app-footer/app-footer.component';
-import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [ AppHeaderComponent, AppFooterComponent],
@@ -27,7 +27,8 @@ import { AppComponent } from './app.component';
     FormsModule,
     AppHeaderModule,
     AppFooterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgOptimizedImage
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
