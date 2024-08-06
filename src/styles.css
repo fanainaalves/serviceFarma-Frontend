@@ -1,16 +1,4 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Ubuntu, "Helvetica", sans-serif;
-}
+/* You can add global styles to this file, and also import other style files */
 
-.container {
-  text-align: center;
-}
-
-mat-card {
-  width: 300px;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

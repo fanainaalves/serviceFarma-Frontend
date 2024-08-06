@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
 
   private users = [
@@ -33,4 +32,5 @@ export class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user).role : null;
   }
+
 }

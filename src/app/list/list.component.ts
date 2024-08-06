@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -7,12 +7,11 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatCardModule, MatFormFieldModule],
+  imports: [ MatTableModule, MatPaginatorModule, MatCardModule, MatFormFieldModule ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
-
-export class ListComponent  implements AfterViewInit{
+export class ListComponent implements AfterViewInit{
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 

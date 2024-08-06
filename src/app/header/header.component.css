@@ -1,0 +1,15 @@
+header nav{
+  background-color: rgb(86, 86, 248);
+  height: 50px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* nav a {
+  margin-right: 10px;
+  list-style: none;
+} */
