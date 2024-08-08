@@ -1,19 +1,40 @@
 *{
   color: blue;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  text-align: center;
+}
+
+mat-form-field{
+  width: 100%;
+  align-items: center;
 }
 
 img{
-  width: 400px;
-  height: 350px;
+  width: 180px;
+  height: 150px;
 }
 
 strong{
   font-style: italic;
 }
 
+form{
+  display: flexbox;
+}
 
 button{
+  display: inline-flex;
   width: 100px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 
+.container{
+  margin-bottom: 100px;
+}
