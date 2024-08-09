@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../auth/auth.service';
 import { ProductService } from '../services/product.service';
 import { Product } from '../model/product.module';
 import { ProductType } from '../model/product-type.enum';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { error } from 'console';
 
 @Component({
   selector: 'app-list',
@@ -16,15 +17,20 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    CommonModule
+    CommonModule,
   ],
-  standalone:true,
+  standalone: true,
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'type', 'amount', 'code', 'actions'];
+  productSelectService = ProductService;
+  productService: ProductService[] = [];
+  successMessage: string;
+  errorMessage: string;
+  product: Product;
+
   dataSource = new MatTableDataSource<Product>();
   hasPermissionToAdd: boolean = false;
   hasPermissionToEdit: boolean = false;
@@ -32,9 +38,10 @@ export class ListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private productService: ProductService,
+    // private productService: ProductService,
     private authService: AuthService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -49,7 +56,7 @@ export class ListComponent implements OnInit {
       (data: Product[]) => {
         this.dataSource.data = data;
       },
-      error => {
+      (error) => {
         console.error('Error fetching products', error);
       }
     );
@@ -70,5 +77,18 @@ export class ListComponent implements OnInit {
 
   editProduct(product: Product): void {
     this.router.navigate(['/medicamentos/editar', product.id]);
+  }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.productSelectService).subscribe(
+      response => {
+        this.successMessage = 'Produto excluído';
+        window.location.reload();
+      },
+      error => {
+        console.error('Erro ao excluir o produto', error);
+        this.errorMessage = 'Erro ao excluir o produto:' + error.message;
+      }
+    );
   }
 }

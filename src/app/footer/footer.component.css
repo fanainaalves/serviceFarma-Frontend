@@ -7,4 +7,6 @@ div{
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
+  color: white;
+  font-weight: 300;
 }
