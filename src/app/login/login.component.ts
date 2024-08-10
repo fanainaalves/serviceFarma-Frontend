@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from './login-service/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -25,8 +25,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
+  username!: string;
+  password!: number;
+  successMessage: string | null = null;
   loginForm: FormGroup;
-  errorMessage: string | null = null;
+  errorMessage: string[] | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -40,20 +43,15 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      this.authService.login(username, password).subscribe(
-        response => {
-          if (response.success) {
-            this.router.navigate(['/medicamentos']);
-          } else {
-            this.errorMessage = response.message;
-          }
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      .subscribe({
+        next: () => {
+          this.successMessage = "Login efetuado com sucesso!";
+          this.router.navigate(["/medicamentos"]);
         },
-        error => {
-          this.errorMessage = 'Ocorreu um erro ao tentar fazer login. Tente novamente.';
+        error: () => {
+          this.errorMessage = ['Ocorreu um erro ao tentar fazer login. Tente novamente.'];
         }
-      );
-    }
+      })
   }
 }

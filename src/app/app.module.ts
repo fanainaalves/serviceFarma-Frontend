@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routes } from './app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthInterceptor } from './auth/authInterceptor.component';
+import { AuthInterceptor } from './login/login-service/authInterceptor.component';
 
 @NgModule({
   declarations: [],

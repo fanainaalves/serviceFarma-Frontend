@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../login/login-service/auth.service';
 import { ProductService } from '../services/product.service';
 import { Product } from '../model/product.module';
 import { ProductType } from '../model/product-type.enum';
