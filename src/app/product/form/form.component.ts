@@ -30,8 +30,8 @@ export class FormComponent implements OnInit {
 
   productForm: FormGroup;
   productTypes = Object.values(ProductType);
-  isEdit = false;
-  productId: number = 0;
+  isEdit: boolean = false;
+  productId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -42,39 +42,59 @@ export class FormComponent implements OnInit {
     this.productForm = this.fb.group({
       title: ['', Validators.required],
       type: ['', Validators.required],
-      amount: [0, [Validators.required, Validators.min(0)]],
-      code: [0, [Validators.required, Validators.min(0)]]
+      amount: [0, [Validators.required, Validators.min(1)]],
+      code: [0, [Validators.required]]
     });
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      if (params['id']) {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
         this.isEdit = true;
-        this.productId = +params['id'];
+        this.productId = +id;
         this.loadProduct(this.productId);
       }
     });
   }
 
   loadProduct(id: number): void {
-    this.productService.getProductById(id).subscribe(product => {
+    this.productService.findProductById(id).subscribe((product: Product) => {
       this.productForm.patchValue(product);
-    });
+    },
+    error => {
+      console.error('Erro ao carregar produto', error);
+    }
+  );
   }
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      const product: Product = this.productForm.value;
-      if (this.isEdit) {
-        this.productService.updateProduct(this.productId, product).subscribe(() => {
+      return;
+    }
+
+    const productData: Product = this.productForm.value;
+    if(this.isEdit && this.productId){
+      productData.id = this.productId;
+      this.productService.updateProduct(productData).subscribe(
+        () => {
+          console.log('Produto atualizado com sucesso');
           this.router.navigate(['/medicamentos']);
-        });
-      } else {
-        this.productService.createProduct(product).subscribe(() => {
+        },
+        error => {
+          console.error('Erro ao atualizar produto', error);
+        }
+      );
+    } else {
+      this.productService.createProduct(productData).subscribe(
+        () => {
+          console.log('Produto criado com sucesso');
           this.router.navigate(['/medicamentos']);
-        });
-      }
+        },
+        error => {
+          console.error('Erro ao criar produto', error);
+        }
+      )
     }
   }
 

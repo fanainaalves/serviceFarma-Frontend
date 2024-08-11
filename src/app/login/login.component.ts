@@ -50,7 +50,7 @@ export class LoginComponent {
           this.router.navigate(["/medicamentos"]);
         },
         error: () => {
-          this.errorMessage = ['Ocorreu um erro ao tentar fazer login. Tente novamente.'];
+          this.errorMessage = ['Login ou senha inválidos.'];
         }
       })
   }

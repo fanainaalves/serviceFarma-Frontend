@@ -9,6 +9,7 @@ import { ProductType } from '../model/product-type.enum';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { error } from 'console';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list',
@@ -25,39 +26,30 @@ import { error } from 'console';
 })
 export class ListComponent implements OnInit {
 
-  productSelectService = ProductService;
-  productService: ProductService[] = [];
-  successMessage: string;
-  errorMessage: string;
-  product: Product;
-
+  displayedColumns: string[] = ['title', 'type', 'amount', 'code', 'actions'];
   dataSource = new MatTableDataSource<Product>();
-  hasPermissionToAdd: boolean = false;
-  hasPermissionToEdit: boolean = false;
+  hasPermissionToAdd: boolean = true;
+  hasPermissionToDelete: boolean = true;
+  hasPermissionToEdit: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    // private productService: ProductService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
-    this.dataSource.paginator = this.paginator;
-
-    this.hasPermissionToAdd = this.authService.hasPermission('ADD_PRODUCT');
-    this.hasPermissionToEdit = this.authService.hasPermission('EDIT_PRODUCT');
   }
 
-  loadProducts(type?: ProductType, search?: string): void {
-    this.productService.getProducts(type, search).subscribe(
-      (data: Product[]) => {
-        this.dataSource.data = data;
+  loadProducts(): void {
+    this.productService.findAllProduct().subscribe(
+      (products: Product[]) => {
+        this.dataSource.data = products;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.error('Error fetching products', error);
+        console.error('Erro ao carregar produtos', error);
       }
     );
   }
@@ -65,6 +57,10 @@ export class ListComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if(this.dataSource.paginator){
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   addNewProduct(): void {
@@ -79,16 +75,16 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/medicamentos/editar', product.id]);
   }
 
-  deleteProduct() {
-    this.productService.deleteProduct(this.productSelectService).subscribe(
-      response => {
-        this.successMessage = 'Produto excluído';
-        window.location.reload();
-      },
-      error => {
-        console.error('Erro ao excluir o produto', error);
-        this.errorMessage = 'Erro ao excluir o produto:' + error.message;
-      }
-    );
+  deleteProduct(product: Product) {
+    if(confirm(`Tem certeza que deseja excluir o produto ${product.title}?`)){
+      this.productService.deleteProduct(product.id).subscribe(
+        () => {
+          this.loadProducts();
+        },
+        error => {
+          console.error("Erro ao exclur produto", error)
+        }
+      )
+    }
   }
 }
