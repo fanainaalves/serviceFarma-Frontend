@@ -1,15 +1,8 @@
 <div class="container">
-  <mat-card-title>Listagem de Medicamentos</mat-card-title>
-  <div class="container">
-    <div class="row">
-      <button>
-        <i class="bi bi-file-plus-fill"></i> Adicionar medicamentos
-      </button>
-    </div>
-  </div>
   <div class="mat-elevation-z8">
+  <mat-card-title>Listagem de Medicamentos</mat-card-title>
     <form action="" role="search">
-      <input type="search" placeholder="Nome ou Código">
+      <input type="search" placeholder="Nome ou Código" >
     </form>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="title">
@@ -33,13 +26,17 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <button mat-stroked-button color="primary">
+            <i class="bi bi-file-plus-fill"></i>
+          </button>
+        </th>
         <td mat-cell *matCellDef="let product">
-          <button mat-button (click)="editProduct(product)" *ngIf="hasPermissionToEdit">
+          <button mat-stroked-button (click)="editProduct(product)" *ngIf="hasPermissionToEdit">
             <i class="bi bi-pencil-square"></i>
             Editar
           </button>
-          <button mat-button (click)="deleteProduct(product)" *ngIf="hasPermissionToDelete">
+          <button mat-stroked-button (click)="deleteProduct(product)" *ngIf="hasPermissionToDelete">
             <i class="bi bi-dash-square"></i>
             Excluir
           </button>

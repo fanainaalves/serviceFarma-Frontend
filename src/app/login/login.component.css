@@ -13,11 +13,6 @@ mat-form-field{
   align-items: center;
 }
 
-img{
-  width: 180px;
-  height: 150px;
-}
-
 strong{
   font-style: italic;
 }
@@ -27,13 +22,11 @@ form{
 }
 
 button{
-  display: inline-flex;
-  width: 100px;
+  display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
-
 
 .container{
   margin-bottom: 100px;

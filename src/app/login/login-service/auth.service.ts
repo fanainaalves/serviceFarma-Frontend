@@ -11,7 +11,7 @@ import { User } from '../login-model/user';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/v1/authorization';
+  private apiUrl = 'http://localhost:8080/auth/api/v1/authorization';
 
   public static readonly SESSION_USER_KEY = 'session_username';
   public static readonly SESSION_TOKEN_KEY = 'session_password';

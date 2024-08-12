@@ -1,14 +1,13 @@
 <nav>
-  <a href="">Home</a>
-  <a href="">Lista</a>
-  <a href="" ><img src="assets/perfil.png" style="width: 30px; height: 30px;">Perfil</a>
-  <!-- <div class="perfil" (click)="toggleDropdown()">
-    <a href="#" id="perfil-link">Perfil</a>
-    <div id="perfil-dropdown" [ngClass]="{'show': dropdownOpen}" class="dropdown-content">
-      <p id="nome-usuario">Nome do Usuário</p>
-      <button id="logout-btn" (click)="logout()">Sair</button>
+  <a href="">Adicionar</a>
+  <a href="">Listar</a>
+  <div class="profile-dropdown" (click)="toggleDropdown()">
+    <img src="assets/perfil.png" style="width: 30px; height: 30px;" alt="perfil">
+    <div class="dropdown-menu" *ngIf="dropdownOpen">
+      <p>{{username}}</p>
+      <p>Usuário não vinculado</p>
+      <button (click)="logout()">Sair</button>
     </div>
-  </div> -->
-  <!-- <a href="https://www.flaticon.com/br/icones-gratis/perfil" title="perfil ícones">Perfil ícones criados por Freepik - Flaticon</a> -->
+  </div>
 </nav>
 

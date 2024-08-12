@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { error } from 'console';
 import { MatSort } from '@angular/material/sort';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-list',
@@ -18,6 +19,7 @@ import { MatSort } from '@angular/material/sort';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
+    MatButtonModule,
     CommonModule,
   ],
   standalone: true,
