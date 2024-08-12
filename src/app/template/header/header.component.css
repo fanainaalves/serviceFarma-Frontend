@@ -9,11 +9,6 @@ nav{
   justify-content: space-around;
 }
 
-.perifl{
-  align-items: end;
-  justify-content: end;
-}
-
 nav a {
   color: white;
   font-weight: 500;
