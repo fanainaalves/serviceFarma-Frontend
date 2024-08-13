@@ -8,10 +8,10 @@ import { AuthGuard } from './login/login-service/auth-guard.service';
 export const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
-  {path: 'medicamentos', component: ListComponent},
-  {path: 'medicamentos', component: FormComponent, canActivate: [AuthGuard] },
-  {path: 'medicamentos/novo', component: FormComponent, canActivate: [AuthGuard] },
-  {path: 'medicamentos/editar/:id', component: FormComponent, canActivate: [AuthGuard] },
+  {path: 'list', component: ListComponent},
+  {path: 'form', component: FormComponent},
+  {path: 'form/new', component: FormComponent},
+  {path: 'form/edit/:id', component: FormComponent},
   // {path: 'register', component: RegisterComponent}
 ];
 

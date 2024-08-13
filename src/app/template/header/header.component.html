@@ -1,13 +1,14 @@
 <nav>
-  <a href="">Adicionar</a>
-  <a href="">Listar</a>
-  <div class="profile-dropdown" (click)="toggleDropdown()">
+  <a href="/form">Adicionar</a>
+  <a href="/list">Listar</a>
+  <!-- <button [matMenuTriggerFor]="menu" class="profile-dropdown" (click)="toggleDropdown()"> -->
+  <button  class="profile-dropdown" (click)="toggleDropdown()">
     <i class="bi bi-person-square"></i>
-    <div class="dropdown-menu" *ngIf="dropdownOpen">
-      <p>{{username}}</p>
-      <p>Usuário não vinculado</p>
-      <button (click)="logout()">Sair</button>
-    </div>
-  </div>
+  </button>
+  <mat-menu #menu="matMenu" class="dropdown-menu" *ngIf="dropdownOpen">
+    <p>{{username}}</p>
+    <p>Usuário não vinculado</p>
+    <button mat-button (click)="logout()">Sair</button>
+  </mat-menu>
 </nav>
 

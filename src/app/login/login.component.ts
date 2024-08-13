@@ -47,7 +47,7 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           this.successMessage = "Login efetuado com sucesso!";
-          this.router.navigate(["/medicamentos"]);
+          this.router.navigate(["/list"]);
         },
         error: () => {
           this.errorMessage = ['Login ou senha inválidos.'];

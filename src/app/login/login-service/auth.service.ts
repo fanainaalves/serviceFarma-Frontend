@@ -28,7 +28,7 @@ export class AuthService {
     return this.httpClient.post<LoginResponse>(`${this.apiUrl}/token`, {username, password}).pipe(
       tap((value) => {
         this.saveUserDataInSession(value.token, value.user);
-        this.router.navigate(['/medicamentos']);
+        this.router.navigate(['/list']);
       }),
     );
   }
