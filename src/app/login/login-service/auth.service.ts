@@ -24,34 +24,50 @@ export class AuthService {
 
   clearFormData(): void{}
 
-  login(username: string, password: string){
+  login(username: string, password: string): Observable<void> {
     return this.httpClient.post<LoginResponse>(`${this.apiUrl}/token`, {username, password}).pipe(
       tap((value) => {
         this.saveUserDataInSession(value.token, value.user);
         this.router.navigate(['/list']);
       }),
+      map(() => {}),
     );
   }
 
-  signup(username: string, password: number){
+  signup(username: string, password: string): Observable<void>{
     return this.httpClient.post<LoginResponse>(this.apiUrl + "/token", {username, password}).pipe (
       tap((value) => {
         this.saveUserDataInSession(value.token, value.user);
-      })
+      }),
+      map(() => {})
     )
   }
 
-  private saveUserDataInSession(token: string, user: User){
+  private saveUserDataInSession(token: string, user: User):void{
     sessionStorage.setItem(AuthService.SESSION_TOKEN_KEY, token);
     sessionStorage.setItem(AuthService.SESSION_USER_KEY, JSON.stringify(user));
   }
 
-  private getUserSession(): any {
+  getToken(): string | null {
+    const token = sessionStorage.getItem(AuthService.SESSION_TOKEN_KEY);
+    console.log("Token Obtido:", token);
+    return token;
+  }
+
+  public getUserSession(): any {
     const user = window.sessionStorage.getItem(AuthService.SESSION_USER_KEY);
     if(user){
-      return JSON.parse(user);
+      return JSON.parse(user) as User;
     }
-    return {};
+    return null;
+  }
+
+  public getCurrentUser(): Observable<User> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<User>(`${this.apiUrl}/current-user`, { headers });
   }
 
   public isLoggedIn(): boolean {
@@ -64,7 +80,7 @@ export class AuthService {
     return false;
   }
 
-  logout(){
+  logout(): void{
     sessionStorage.removeItem(AuthService.SESSION_USER_KEY);
     sessionStorage.removeItem(AuthService.SESSION_TOKEN_KEY);
   }

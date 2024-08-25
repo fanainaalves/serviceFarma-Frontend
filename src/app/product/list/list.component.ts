@@ -15,11 +15,6 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-list',
   imports: [
-    MatPaginator,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatButtonModule,
     CommonModule,
   ],
   standalone: true,
@@ -29,26 +24,35 @@ import {MatButtonModule} from '@angular/material/button';
 export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'type', 'amount', 'code', 'actions'];
-  dataSource = new MatTableDataSource<Product>();
+  dataSource =  new MatTableDataSource<Product>();
   hasPermissionToAdd: boolean = true;
   hasPermissionToDelete: boolean = true;
   hasPermissionToEdit: boolean = true;
+  currentPage: number = 1;
+  totalItems: number = 0;
+  pageSize: number = 5;
+  totalPages: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadProducts();
+    if(this.authService.isLoggedIn()){
+      this.loadProducts();
+    } else {
+      this.router.navigate(['/login'])
+    }
   }
 
-  loadProducts(): void {
-    this.productService.findAllProduct().subscribe(
-      (products: Product[]) => {
-        this.dataSource.data = products;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+  loadProducts(page: number = 1,  pageSize: number = this.pageSize): void {
+    this.productService.findAllProduct(page, this.pageSize).subscribe(
+      (response: {items: Product[], total: number}) => {
+        this.dataSource.data = response.items;
+        this.totalItems = response.total;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+        this.currentPage = page;
       },
       (error) => {
         console.error('Erro ao carregar produtos', error);
@@ -66,15 +70,15 @@ export class ListComponent implements OnInit {
   }
 
   addNewProduct(): void {
-    this.router.navigate(['/medicamentos/novo']);
+    this.router.navigate(['/form/new']);
   }
 
   viewProduct(product: Product): void {
-    this.router.navigate(['/medicamentos/editar', product.id]);
+    this.router.navigate(['/form/', product.id]);
   }
 
   editProduct(product: Product): void {
-    this.router.navigate(['/medicamentos/editar', product.id]);
+    this.router.navigate(['/form/edit/', product.id]);
   }
 
   deleteProduct(product: Product) {
@@ -89,4 +93,22 @@ export class ListComponent implements OnInit {
       )
     }
   }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.loadProducts(page, this.pageSize);
+    }
+  }
+
+  onPageSizeChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.pageSize = Number(selectElement.value);
+    this.currentPage = 1;  // Reinicia a página para 1 sempre que o tamanho mudar
+    this.loadProducts(this.currentPage, this.pageSize);
+  }
+
+  getPagesArray(): number[] {
+    return Array(this.totalPages).fill(0).map((_, i) => i + 1);
+  }
+
 }

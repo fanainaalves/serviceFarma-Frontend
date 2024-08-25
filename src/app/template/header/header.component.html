@@ -1,14 +1,11 @@
 <nav>
-  <a href="/form">Adicionar</a>
-  <a href="/list">Listar</a>
-  <!-- <button [matMenuTriggerFor]="menu" class="profile-dropdown" (click)="toggleDropdown()"> -->
-  <button  class="profile-dropdown" (click)="toggleDropdown()">
-    <i class="bi bi-person-square"></i>
-  </button>
-  <mat-menu #menu="matMenu" class="dropdown-menu" *ngIf="dropdownOpen">
-    <p>{{username}}</p>
-    <p>Usuário não vinculado</p>
-    <button mat-button (click)="logout()">Sair</button>
-  </mat-menu>
+    <button class="profile-dropdown" >
+      <i class="bi bi-person-square"></i>
+      Olá, <span id="username-text">{{username}}</span>. Seja bem vinda(o)!
+    </button>
+    <button class="profile-dropdown" (click)="logout()">
+      <i class="bi bi-power"></i>
+      Sair
+    </button>
 </nav>
 

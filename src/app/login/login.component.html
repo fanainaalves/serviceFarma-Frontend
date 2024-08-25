@@ -1,21 +1,21 @@
 <div class="container">
   <h1>Service <strong>Farma</strong></h1>
   <img src="assets/farmacia.jpg" alt="login">
-  <mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
+  <div class="card mb-2">
+    <h2 class="mt-3 mb-1">Login</h2>
+    <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username" />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" />
-        </mat-form-field>
-        <button mat-stroked-button color="primary" type="submit">Entrar</button>
+        <div class="mb-2">
+          <label class="form-label">Username</label>
+          <input class="form-control" type="text" formControlName="username"  />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Password</label>
+          <input class="form-control" type="password" formControlName="password" />
+        </div>
+        <button class="btn btn-primary" type="submit">Entrar</button>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 </div>

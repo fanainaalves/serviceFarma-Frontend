@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <mat-card>
     <mat-card-title>{{ isEdit ? 'Editar Medicamento' : 'Cadastrar Medicamento' }}</mat-card-title>
     <mat-card-content>
@@ -10,9 +10,11 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Tipo</mat-label>
-          <mat-select formControlName="type" required>
-            <mat-option *ngFor="let type of productTypes" [value]="type">{{ type }}</mat-option>
-          </mat-select>
+          <select formControlName="type" required>
+            <option *ngFor="let type of productTypes" [value]="type">
+              {{ type }}
+            </option>
+          </select>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -32,4 +34,48 @@
       </form>
     </mat-card-content>
   </mat-card>
+</div> -->
+
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h4>{{ isEdit ? 'Editar Medicamento' : 'Cadastrar Medicamento' }}</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <!-- Título -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Título</label>
+          <input type="text" id="title" class="form-control" formControlName="title" required>
+        </div>
+
+        <!-- Tipo -->
+        <div class="mb-3">
+          <label for="type" class="form-label">Tipo</label>
+          <select id="type" class="form-select" formControlName="type" required>
+            <option *ngFor="let type of productTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <!-- Quantidade -->
+        <div class="mb-3">
+          <label for="amount" class="form-label">Quantidade</label>
+          <input type="number" id="amount" class="form-control" formControlName="amount" required min="1">
+        </div>
+
+        <!-- Código -->
+        <div class="mb-3">
+          <label for="code" class="form-label">Código</label>
+          <input type="number" id="code" class="form-control" formControlName="code" required>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">{{ isEdit ? 'Salvar' : 'Cadastrar' }}</button>
+          <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

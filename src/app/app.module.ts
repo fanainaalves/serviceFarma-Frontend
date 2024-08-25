@@ -8,8 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule, routes } from './app.routes';
-import { AuthInterceptor } from './login/login-service/authInterceptor.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './login/login-service/auth.Interceptor';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
@@ -24,6 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     NgOptimizedImage,
+    BrowserAnimationsModule,
     NoopAnimationsModule,
     HttpClientModule
   ],

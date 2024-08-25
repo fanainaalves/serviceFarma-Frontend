@@ -1,30 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../login/login-service/auth.service';
 import { User } from '../../login/login-model/user';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatMenuModule],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-  username!: User;
-  dropdownOpen = false;
+export class HeaderComponent implements OnInit{
 
-  constructor(private router: Router) {}
+  username: string = '';
 
+  constructor( private authService: AuthService, private router: Router) {}
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  ngOnInit(): void {
+    this.loadUser();
+  }
+
+  loadUser(): void{
+    this.authService.getCurrentUser().subscribe(
+      (user: User) => {
+        this.username = user.username;
+      },
+      error => {
+        console.error("erro ao carregar usuario", error)
+        this.username = 'Usuario';
+      }
+    );
   }
 
   logout() {
-    alert('Saindo...');
+    this.authService.logout();
     this.router.navigate(['/login'])
   }
+
 }

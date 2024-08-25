@@ -1,7 +1,3 @@
-mat-card-title{
-  padding: 20px;
-}
-
 input{
   width: 80%;
   padding: 5px;
@@ -17,4 +13,8 @@ input{
 button{
   color: black;
   cursor: pointer;
+}
+
+.container{
+  margin-bottom: 100px;
 }

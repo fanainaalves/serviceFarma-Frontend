@@ -1,4 +1,4 @@
-nav{
+nav {
   background-color: rgb(86, 86, 248);
   height: 50px;
   width: 100%;
@@ -16,38 +16,32 @@ nav a {
   text-decoration: none;
 }
 
-.profile-dropdown {
-  position: relative;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: white;
-  color: black;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 200px;
-  padding: 10px;
-  text-align: left;
-}
-
-.dropdown-menu p {
-  margin: 5px 0;
-}
-
-.dropdown-menu button {
-  width: 100%;
-  padding: 5px;
-  background-color: #007bff;
+button.profile-dropdown {
+  display: flex;
+  align-items: center;
   border: none;
+  background-color: transparent;
+  padding: 0;
   color: white;
-  border-radius: 3px;
   cursor: pointer;
+  font-size: 12px;
+  position: relative;
 }
 
-.dropdown-menu button:hover {
-  background-color: #0056b3;
+
+/* Estiliza o ícone e o nome do usuário */
+button.profile-dropdown i {
+  margin-right: 8px;
+  font-size: 1.5em;
+  color: white;
+}
+
+#username-text{
+  text-transform: capitalize;
+  margin-left: 0.5em;
+}
+
+span{
+  margin-right: 2px;
+  display: flex;
 }
