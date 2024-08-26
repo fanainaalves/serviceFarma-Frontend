@@ -5,7 +5,7 @@ div{
   text-align: center;
   padding: 10px;
   box-sizing: border-box;
-  position: fixed;
+  position: relative;
   bottom: 0;
   color: white;
   font-weight: 300;

@@ -6,7 +6,7 @@ input{
   align-items: center;
   text-align: center;
   margin-left: 50px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   border-radius: 5px;
 }
 
@@ -16,5 +16,10 @@ button{
 }
 
 .container{
-  margin-bottom: 100px;
+  margin-bottom: 20px;
+  width: 100%;
 }
+card{
+  width: 80%;
+}
+

@@ -31,16 +31,28 @@ export class ProductService {
 
   findAllProduct(page: number, pageSize: number, search?: string, type?: string):
    Observable<{ items: Product[], total: number }> {
-    let params = new HttpParams().set('page', page.toString()).set('size', pageSize.toString());
+    let params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', pageSize.toString());
+
     if (search) {
       params = params.set('search', search);
     }
     if (type) {
       params = params.set('type', type);
     }
-    const headers = this.getHeaders();
-    return this.httpClient.get<{items: Product[], total: number}>(`${this.API_SPRING}/`, {params, headers});
 
+    const headers = this.getHeaders();
+    return this.httpClient.get<{ items: Product[], total: number }>(`${this.API_SPRING}/`, { params, headers })
+      .pipe(
+        map(response => {
+          // Garante que o campo 'items' sempre exista
+          if (!response || !response.items) {
+            return { items: [], total: 0 };
+          }
+          return response;
+        })
+      );
   }
 
   findProductById(id: number): Observable<Product> {

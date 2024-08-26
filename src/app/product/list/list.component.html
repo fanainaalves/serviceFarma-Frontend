@@ -1,12 +1,24 @@
 <div class="container">
-  <div class="card mt-4">
+  <div class="card mt-2">
     <h4 class="card-header">Listagem de Medicamentos</h4>
     <div class="card-body">
-      <!-- Formulário de pesquisa -->
-      <form class="mb-3" role="search">
-        <input type="search" class="form-control" placeholder="Nome ou Código" (input)="applyFilter($event)">
-      </form>
 
+      <!-- Seletor de Tipo -->
+      <div class="mb-3">
+        <label for="typeSelect" class="form-label">Tipo:</label>
+        <select id="typeSelect" class="form-select" [(ngModel)]="searchBy" (change)="loadProducts(1, pageSize, searchValue, searchBy)">
+          <option value="">Todos</option>
+          <option value="CARTELA">CARTELA</option>
+          <option value="CAIXA">CAIXA</option>
+          <option value="UNIDADE">UNIDADE</option>
+          <!-- Adicione outros tipos conforme necessário -->
+        </select>
+      </div>
+      <!-- Formulário de pesquisa -->
+       <div class="input-group input-group-sm mb-3" role="search">
+        <span class="input-group-text" id="inputGroup-sizing-default"><i class="bi bi-search"></i></span>
+        <input aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" type="search" class="form-control" placeholder="insira um Título ou Código para pesquisar" (input)="applyFilter($event)">
+      </div>
       <!-- Seletor de Itens por Página -->
       <div class="mb-3 d-flex justify-content-between align-items-center">
         <div>
@@ -17,6 +29,11 @@
         </div>
         <div>
           <strong>Total de itens: {{totalItems}}</strong>
+        </div>
+        <div>
+          <button class="btn btn-success btn-sm" (click)="addNewProduct()" *ngIf="hasPermissionToAdd">
+            <i class="bi bi-plus-square"></i> Adicionar Produto
+          </button>
         </div>
       </div>
 

@@ -11,11 +11,12 @@ import { CommonModule } from '@angular/common';
 import { error } from 'console';
 import { MatSort } from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
   imports: [
-    CommonModule,
+    CommonModule, FormsModule
   ],
   standalone: true,
   templateUrl: './list.component.html',
@@ -32,6 +33,9 @@ export class ListComponent implements OnInit {
   totalItems: number = 0;
   pageSize: number = 5;
   totalPages: number = 0;
+  searchValue: string = '';
+  searchBy: string = '';
+  products: Product[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,9 +50,9 @@ export class ListComponent implements OnInit {
     }
   }
 
-  loadProducts(page: number = 1,  pageSize: number = this.pageSize): void {
-    this.productService.findAllProduct(page, this.pageSize).subscribe(
-      (response: {items: Product[], total: number}) => {
+  loadProducts(page: number = 1, pageSize: number = this.pageSize, searchValue: string = '', searchBy: string = ''): void {
+    this.productService.findAllProduct(page, pageSize, searchValue, this.searchBy).subscribe(
+      (response: { items: Product[], total: number }) => {
         this.dataSource.data = response.items;
         this.totalItems = response.total;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
@@ -60,13 +64,10 @@ export class ListComponent implements OnInit {
     );
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if(this.dataSource.paginator){
-      this.dataSource.paginator.firstPage();
-    }
+  applyFilter(event: Event): void {
+    this.searchValue = (event.target as HTMLInputElement).value.trim().toUpperCase();
+    this.loadProducts(1, this.pageSize, this.searchValue, this.searchBy);
   }
 
   addNewProduct(): void {
@@ -96,15 +97,15 @@ export class ListComponent implements OnInit {
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.loadProducts(page, this.pageSize);
+      this.loadProducts(page, this.pageSize, this.searchValue);
     }
   }
 
   onPageSizeChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.pageSize = Number(selectElement.value);
-    this.currentPage = 1;  // Reinicia a página para 1 sempre que o tamanho mudar
-    this.loadProducts(this.currentPage, this.pageSize);
+    this.currentPage = 1;
+    this.loadProducts(this.currentPage, this.pageSize, this.searchValue);
   }
 
   getPagesArray(): number[] {
